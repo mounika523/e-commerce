@@ -1,0 +1,49 @@
+/* ProductDetails.css */
+.product-details-container {
+    display: flex; /* Enables Flexbox layout */
+    justify-content: space-between; /* Space between image and description */
+    align-items: center; /* Vertically center the items */
+    margin: 20px; /* Add margin around the container */
+  }
+  
+  .product-image {
+    flex: 1; /* Takes up one part of the container */
+    max-width: 50%; /* Ensure image doesn’t take too much space */
+  }
+  
+  .product-image img {
+    width: 50%; /* Makes image fill its container */
+    height: 50%; /* Keeps image's aspect ratio intact */
+    border-radius: 10px; /* Adds rounded corners to image */
+  }
+  
+  .product-info {
+    flex: 2; /* Takes up twice the space of the image */
+    max-width: 50%; /* Ensure description doesn’t overflow */
+    padding-left: 20px; /* Add some space between image and description */
+  }
+  
+  .product-info h2 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .product-info .price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #27ae60; /* Green color for price */
+    margin-top: 10px;
+  }
+  
+  .product-info .description {
+    font-size: 16px;
+    color: #555;
+    margin-top: 15px;
+  }
+  
+  .product-info .category, .product-info .rating {
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+  }
+  

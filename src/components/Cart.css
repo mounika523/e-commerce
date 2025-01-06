@@ -1,0 +1,26 @@
+/* src/components/Cart.css */
+
+.cart {
+    padding: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .cart-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cart-info input {
+    width: 50px;
+    margin: 5px 0;
+  }
+  
+  .cart-total {
+    margin-top: 20px;
+  }
+  
