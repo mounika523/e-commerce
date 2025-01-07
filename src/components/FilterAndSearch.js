@@ -99,7 +99,7 @@ function FilterAndSearch({ products, onFilter }) {
           </select>
         </div>
 
-        {/* Cart Icon */}
+        {/* Cart Icon */ }
         <div className="cart-icon" onClick={handleCartIconClick}>
           <span>🛒</span>
           <span>{cart.length}</span>
