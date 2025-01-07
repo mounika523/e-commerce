@@ -1,9 +1,9 @@
-// src/components/ProductDetails.js
+
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './ProductDetails.css'; // Add styles specific to ProductDetails
+import './ProductDetails.css'; 
 
 function ProductDetails() {
   const { id } = useParams(); // Extract the product id from the URL

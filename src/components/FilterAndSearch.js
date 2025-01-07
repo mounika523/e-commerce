@@ -1,58 +1,63 @@
-// src/components/FilterAndSearch.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FilterAndSearch.css';
-import { useCart } from '../context/CartContext'; // Import useCart hook
+import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 function FilterAndSearch({ products, onFilter }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [sortOption, setSortOption] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { cart } = useCart();
+  const navigate = useNavigate();
 
-  const { cart } = useCart(); // Get cart from context
-
-  const filterProducts = (term = searchTerm) => {
-    const filtered = products.filter((product) => {
-      const matchesSearch = term
-        ? (product.title || '').toLowerCase().includes(term.toLowerCase())
+  // Apply Filters and Sort
+  const applyFilters = () => {
+    let filtered = products.filter((product) => {
+      const matchesSearch = searchTerm
+        ? product.title.toLowerCase().includes(searchTerm.toLowerCase())
         : true;
-
       const matchesCategory = selectedCategory
         ? product.category === selectedCategory
         : true;
-
       return matchesSearch && matchesCategory;
     });
 
+    if (sortOption === 'price-low-to-high') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortOption === 'price-high-to-low') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sortOption === 'rating-high-to-low') {
+      filtered.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+    }
+
+    setFilteredProducts(filtered);
     onFilter(filtered);
   };
 
+  // Debounced Search Function
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      applyFilters();
+    }, 300);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [searchTerm, selectedCategory, sortOption, products]);
+
   const handleSearchChange = (e) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-
-    if (term) {
-      const relevantSuggestions = products.filter((product) =>
-        product.title.toLowerCase().includes(term.toLowerCase())
-      );
-      setSuggestions(relevantSuggestions.slice(0, 5));
-    } else {
-      setSuggestions([]);
-    }
-
-    filterProducts(term);
+    setSearchTerm(e.target.value);
   };
 
-  const handleSearchIconClick = () => {
-    setSuggestions([]);
-    filterProducts();
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
-  // Define handleSuggestionClick
-  const handleSuggestionClick = (suggestion) => {
-    setSearchTerm(suggestion.title);
-    setSuggestions([]);
-    filterProducts(suggestion.title); // Filter products based on clicked suggestion
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  const handleCartIconClick = () => {
+    navigate('/cart');
   };
 
   return (
@@ -62,6 +67,7 @@ function FilterAndSearch({ products, onFilter }) {
       </div>
 
       <div className="search-category-container">
+        {/* Search Bar */}
         <div className="search-bar">
           <input
             type="text"
@@ -69,28 +75,14 @@ function FilterAndSearch({ products, onFilter }) {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <button className="search-icon" onClick={handleSearchIconClick}>
+          <button className="search-icon" onClick={applyFilters}>
             🔍
           </button>
-          {suggestions.length > 0 && (
-            <ul className="suggestions">
-              {suggestions.map((suggestion) => (
-                <li key={suggestion.id} onClick={() => handleSuggestionClick(suggestion)}>
-                  {suggestion.title}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
 
+        {/* Category Dropdown */}
         <div className="category-dropdown">
-          <select
-            value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              filterProducts();
-            }}
-          >
+          <select value={selectedCategory} onChange={handleCategoryChange}>
             <option value="">All Categories</option>
             <option value="electronics">Electronics</option>
             <option value="jewelery">Jewelry</option>
@@ -99,10 +91,20 @@ function FilterAndSearch({ products, onFilter }) {
           </select>
         </div>
 
+        {/* Sort Dropdown */}
+        <div className="sort-dropdown">
+          <select value={sortOption} onChange={handleSortChange}>
+            <option value="">Sort by</option>
+            <option value="price-low-to-high">Price: Low to High</option>
+            <option value="price-high-to-low">Price: High to Low</option>
+            <option value="rating-high-to-low">Rating: High to Low</option>
+          </select>
+        </div>
+
         {/* Cart Icon */}
-        <div className="cart-icon">
+        <div className="cart-icon" onClick={handleCartIconClick}>
           <span>🛒</span>
-          <span>{cart.length}</span> {/* Display number of items in cart */}
+          <span>{cart.length}</span>
         </div>
       </div>
     </div>
