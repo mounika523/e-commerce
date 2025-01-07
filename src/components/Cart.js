@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './Cart.css';
-import { useCart } from '../context/CartContext'; // Import CartContext
+import { useCart } from '../context/CartContext'; 
 
 function Cart() {
   const navigate = useNavigate(); // Initialize useNavigate hook
