@@ -100,9 +100,10 @@ function FilterAndSearch({ products, onFilter }) {
         </div>
 
         {/* Cart Icon */ }
-        <div className="cart-icon" onClick={handleCartIconClick}>
+        <div className="cart-icon" onClick={handleCartIconClick}> 
+          
           <span>🛒</span>
-          <span>{cart.length}</span>
+          <span className='cart-count'>{cart.length}</span>
         </div>
       </div>
     </div>

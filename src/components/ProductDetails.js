@@ -1,12 +1,11 @@
-
-
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import './ProductDetails.css'; 
 
 function ProductDetails() {
   const { id } = useParams(); // Extract the product id from the URL
+  const navigate = useNavigate(); // Initialize useNavigate
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +23,11 @@ function ProductDetails() {
   }, [id]);
 
   if (loading) {
-    return <div className="loading">Loading product details...</div>;
+    return (
+      <div className="loading">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   if (error) {
@@ -32,20 +35,23 @@ function ProductDetails() {
   }
 
   return (
-    <div className="product-details ">
-
-      
-        <div className="product-image">
-          <img src={product.image} alt={product.title}  />
-        </div>
-        <div className="product-info">
-          <h2>{product.title}</h2>
-          <p className="description">{product.description}</p>
-          <p className="price">${product.price}</p>
-          <p className="rating">Rating: {product.rating.rate} ({product.rating.count} reviews)</p>
-          <p className="category">{product.category}</p>
-        </div>
-      
+    <div className="product-details">
+      <div className="product-image">
+        <img src={product.image} alt={product.title} />
+      </div>
+      <div className="product-info">
+        <h2>{product.title}</h2>
+        <p className="description">{product.description}</p>
+        <p className="price">${product.price}</p>
+        <p className="rating">Rating: {product.rating.rate} ({product.rating.count} reviews)</p>
+        <p className="category">{product.category}</p>
+        <button
+          className="back-button"
+          onClick={() => navigate('/')}
+        >
+          Back to Listing Page
+        </button>
+      </div>
     </div>
   );
 }

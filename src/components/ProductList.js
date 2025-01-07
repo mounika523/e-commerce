@@ -10,8 +10,9 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [popupMessage, setPopupMessage] = useState(null);  // State for popup message
 
-  const { addToCart } = useCart(); // Get addToCart function from context
+  const { addToCart, cart } = useCart(); // Get addToCart function from context, and cart to track added items
 
   useEffect(() => {
     axios.get('https://fakestoreapi.com/products')
@@ -26,21 +27,42 @@ function ProductList() {
       });
   }, []);
 
+  // Handle adding product to cart and showing popup
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setPopupMessage(`${product.title} added to cart!`);  // Show popup with product title
+    setTimeout(() => setPopupMessage(null), 3000);  // Hide popup after 3 seconds
+  };
+
   const handleFilter = (filtered) => {
     setFilteredProducts(filtered);
   };
 
+  // Check if product is in the cart
+  const isProductInCart = (productId) => {
+    return cart.some((item) => item.id === productId);
+  };
+
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading">
+      <div className='spinner'></div>
+    </div>;
   }
 
   if (error) {
-    return <div className="error">Error fetching products: {error.message}</div>;
+    return <div className="error" >Error fetching products: {error.message}</div>;
   }
 
   return (
     <div>
       <FilterAndSearch products={products} onFilter={handleFilter} />
+
+      {/* Popup Notification */}
+      {popupMessage && (
+        <div className="popup-notification">
+          <p>{popupMessage}</p>
+        </div>
+      )}
 
       <div className="product-list">
         {filteredProducts.map((product) => (
@@ -53,9 +75,13 @@ function ProductList() {
                 <p className="category">{product.category}</p>
               </Link>
             </div>
-            
-            <button onClick={() => addToCart(product)} className='add-to-cart-button'>
-              Add to Cart
+
+            <button 
+              onClick={() => handleAddToCart(product)} 
+              className="add-to-cart-button"
+              disabled={isProductInCart(product.id)} // Disable if already added
+            >
+              {isProductInCart(product.id) ? 'Added' : 'Add to Cart'}
             </button>
           </div>
         ))}

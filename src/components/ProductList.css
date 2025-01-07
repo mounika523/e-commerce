@@ -39,6 +39,8 @@
   }
   
   .product-item h3 {
+    text-align: center;
+    /*align-items: center;*/
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -81,3 +83,71 @@
   .add-to-cart-button:hover {
     background-color: #e05c4e;
   }
+  /* ProductList.css */
+.popup-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745; /* Green background */
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 1000; /* Ensure it's on top */
+  animation: slideIn 0.5s ease-out, fadeOut 0.5s 2.5s forwards;
+}
+
+/* Animation for sliding in */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation for fading out */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
+/* Center the loading spinner */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full-screen height */
+  background:linear-gradient(skyblue,lightgreen) /* Optional background */
+}
+
+/* Spinner animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #3498db; /* Blue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

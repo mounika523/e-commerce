@@ -1,14 +1,26 @@
-// src/components/Cart.js
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Cart.css';
 import { useCart } from '../context/CartContext'; // Import CartContext
 
 function Cart() {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const navigate = useNavigate(); // Initialize useNavigate hook
+  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
 
   // Calculate the total amount of the cart
   const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+  // Handle quantity change
+  const handleQuantityChange = (itemId, newQuantity) => {
+    if (newQuantity > 0) {
+      updateQuantity(itemId, newQuantity); // Ensure quantity is greater than 0
+    }
+  };
+
+  // Navigate back to the product listing page
+  const handleBackToProductListing = () => {
+    navigate('/'); // Change this to the correct path of your product listing page
+  };
 
   return (
     <div className="cart">
@@ -24,7 +36,19 @@ function Cart() {
                 <div className="cart-item-details">
                   <h3>{item.title}</h3>
                   <p>Price: ${item.price}</p>
-                  <p>Quantity: {item.quantity}</p>
+
+                  {/* Quantity selector as NumberInput */}
+                  <div className="quantity-selector">
+                    <label htmlFor={`quantity-${item.id}`}>Quantity: </label>
+                    <input
+                      type="number"
+                      id={`quantity-${item.id}`}
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+                      className="quantity-input"
+                    />
+                  </div>
                   <button onClick={() => removeFromCart(item.id)}>Remove</button>
                 </div>
               </li>
@@ -36,6 +60,11 @@ function Cart() {
           </div>
         </div>
       )}
+
+      {/* Back to Product Listing Button */}
+      <button onClick={handleBackToProductListing} className="back-to-listing-button">
+        Back to Product Listing
+      </button>
     </div>
   );
 }
