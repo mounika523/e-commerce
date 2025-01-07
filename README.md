@@ -56,6 +56,10 @@ Here is an sample online shopping platform where users can browse,filter and sel
  -you can directly review my website through this link :
   [Live demo] (https://deploy-preview-3--e-commerce-523.netlify.app/)
 
+**Demovedio**
+https://github.com/user-attachments/assets/4fe56794-21df-486c-bd6a-b24d08659553
+
+
 ## Contributing
 
 1.Fork the repository
@@ -72,7 +76,7 @@ Here is an sample online shopping platform where users can browse,filter and sel
 - [React Documentation](https://reactjs.org/docs/getting-started.html) for React learning resources.
 
 ##Troubleshooting
-**serverBUsy**:sometimes server is busy it takes time to fetch the data becuase of lots of requests.
+**serverBusy**:sometimes server is busy it takes time to fetch the data becuase of lots of requests.
 -**Issue**:App fails to load data from the API.
 -**Solution**:Ensure you have a stable internet connection and the API link is active.
 
