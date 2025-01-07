@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './FilterAndSearch.css';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
@@ -7,13 +7,12 @@ function FilterAndSearch({ products, onFilter }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortOption, setSortOption] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const { cart } = useCart();
   const navigate = useNavigate();
 
-  // Apply Filters and Sort
-  const applyFilters = () => {
-    let filtered = products.filter((product) => {
+  // Memoize applyFilters to prevent unnecessary re-renders
+  const applyFilters = useCallback(() => {
+    const filteredProducts = products.filter((product) => {
       const matchesSearch = searchTerm
         ? product.title.toLowerCase().includes(searchTerm.toLowerCase())
         : true;
@@ -24,16 +23,15 @@ function FilterAndSearch({ products, onFilter }) {
     });
 
     if (sortOption === 'price-low-to-high') {
-      filtered.sort((a, b) => a.price - b.price);
+      filteredProducts.sort((a, b) => a.price - b.price);
     } else if (sortOption === 'price-high-to-low') {
-      filtered.sort((a, b) => b.price - a.price);
+      filteredProducts.sort((a, b) => b.price - a.price);
     } else if (sortOption === 'rating-high-to-low') {
-      filtered.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+      filteredProducts.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
     }
 
-    setFilteredProducts(filtered);
-    onFilter(filtered);
-  };
+    onFilter(filteredProducts); // Pass filtered products to parent
+  }, [products, searchTerm, selectedCategory, sortOption, onFilter]);
 
   // Debounced Search Function
   useEffect(() => {
@@ -42,7 +40,7 @@ function FilterAndSearch({ products, onFilter }) {
     }, 300);
 
     return () => clearTimeout(debounceTimeout);
-  }, [searchTerm, selectedCategory, sortOption, products]);
+  }, [applyFilters]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -101,10 +99,11 @@ function FilterAndSearch({ products, onFilter }) {
           </select>
         </div>
 
-        {/* Cart Icon */}
-        <div className="cart-icon" onClick={handleCartIconClick}>
+        {/* Cart Icon */ }
+        <div className="cart-icon" onClick={handleCartIconClick}> 
+          
           <span>🛒</span>
-          <span>{cart.length}</span>
+          <span className='cart-count'>{cart.length}</span>
         </div>
       </div>
     </div>
