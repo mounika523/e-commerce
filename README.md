@@ -6,11 +6,11 @@ Here is an sample online shopping platform where users can browse,filter and sel
 
 ## Technologies Used
 
-**React**:it is used to develop Front-end framework for building the responsive user interface 
-**React Router**:which is used to navigate between pages in a single page i.e index.html
-**Axios**:used for API requests to fetch products data . In this project i used a sample fake API LINK:"https://fakestoreapi.com/products".
-**Context API**:used to manage the cart state globally
-**CSS**:used for styling the website
+**React**:it is used to develop Front-end framework for building the responsive user interface <br />
+**React Router**:which is used to navigate between pages in a single page i.e index.html  <br />
+**Axios**:used for API requests to fetch products data . In this project i used a sample fake API LINK:"https://fakestoreapi.com/products".   <br />
+**Context API**:used to manage the cart state globally  <br />
+**CSS**:used for styling the website   <br />
 
 ### Installation
  
