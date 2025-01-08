@@ -23,24 +23,24 @@ Here is an sample online shopping platform where users can browse,filter and sel
 
 
 ### Steps
-1.clone the repository:   <br />
-            ```bash        <br />
-            git clone  https://github.com/mounika523/e-commerce       <br />
-            ```     <br />
+1.clone the repository:   
+            ```bash        
+            git clone  https://github.com/mounika523/e-commerce       
+            ```     
 
-2.Navigate to the project folder      <br />
-           ```bash        <br />
-           cd e-commerce       <br />
-           ```   <br />
+2.Navigate to the project folder     
+           ```bash       
+           cd e-commerce       
+           ```  
 
-3.Install dependencies: <br />
-          ```bash    <br />
-          npm install    <br />
-          ```    <br />
-4.Start the development server:  <br />
-          ```bash  <br />
-           npm start      <br />
-           ```        v
+3.Install dependencies: 
+          ```bash    
+          npm install    
+          ```    
+4.Start the development server: 
+          ```bash  
+           npm start     
+           ```        
 
            After executing npm command The application should now be running at http://localhost:3000
 
