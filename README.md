@@ -54,7 +54,7 @@ Here is an sample online shopping platform where users can browse,filter and sel
 
 ## Link
  -you can directly review my website through this link :
-  [Live demo] (https://deploy-preview-3--e-commerce-523.netlify.app/)
+  [Live demo] (https://e-commerce-2025.netlify.app/)
 
 **Demovedio**
 https://github.com/user-attachments/assets/4fe56794-21df-486c-bd6a-b24d08659553
